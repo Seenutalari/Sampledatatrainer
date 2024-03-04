@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="projectModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="admin">
+    <Key>
+      <PropertyRef Name="aid" />
+    </Key>
+    <Property Name="aid" Type="Int32" Nullable="false" />
+    <Property Name="aname" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="apassword" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="products" Relationship="Self.FK__product__aid__1AD3FDA4" FromRole="admin" ToRole="product" />
+  </EntityType>
+  <EntityType Name="category">
+    <Key>
+      <PropertyRef Name="cat_id" />
+    </Key>
+    <Property Name="cat_id" Type="Int32" Nullable="false" />
+    <Property Name="c_name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="products" Relationship="Self.FK__product__cat_id__19DFD96B" FromRole="categories" ToRole="product" />
+  </EntityType>
+  <EntityType Name="product">
+    <Key>
+      <PropertyRef Name="p_id" />
+    </Key>
+    <Property Name="p_id" Type="Int32" Nullable="false" />
+    <Property Name="pname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="p_image" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="price" Type="Int32" />
+    <Property Name="description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+    <Property Name="cat_id" Type="Int32" />
+    <Property Name="aid" Type="Int32" />
+    <NavigationProperty Name="admin" Relationship="Self.FK__product__aid__1AD3FDA4" FromRole="product" ToRole="admin" />
+    <NavigationProperty Name="category" Relationship="Self.FK__product__cat_id__19DFD96B" FromRole="product" ToRole="categories" />
+    <NavigationProperty Name="orders" Relationship="projectModel.FK__orders__p_id__44CA3770" FromRole="product" ToRole="order" />
+  </EntityType>
+  <Association Name="FK__product__aid__1AD3FDA4">
+    <End Role="admin" Type="Self.admin" Multiplicity="0..1" />
+    <End Role="product" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="admin">
+        <PropertyRef Name="aid" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="aid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__product__cat_id__19DFD96B">
+    <End Role="categories" Type="Self.category" Multiplicity="0..1" />
+    <End Role="product" Type="Self.product" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="categories">
+        <PropertyRef Name="cat_id" />
+      </Principal>
+      <Dependent Role="product">
+        <PropertyRef Name="cat_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="projectEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="admins" EntityType="Self.admin" />
+    <EntitySet Name="categories" EntityType="Self.category" />
+    <EntitySet Name="products" EntityType="Self.product" />
+    <AssociationSet Name="FK__product__aid__1AD3FDA4" Association="Self.FK__product__aid__1AD3FDA4">
+      <End Role="admin" EntitySet="admins" />
+      <End Role="product" EntitySet="products" />
+    </AssociationSet>
+    <AssociationSet Name="FK__product__cat_id__19DFD96B" Association="Self.FK__product__cat_id__19DFD96B">
+      <End Role="categories" EntitySet="categories" />
+      <End Role="product" EntitySet="products" />
+    </AssociationSet>
+    <EntitySet Name="customers" EntityType="projectModel.customer" />
+    <EntitySet Name="carts" EntityType="projectModel.cart" />
+    <AssociationSet Name="FK__orders__cid__43D61337" Association="projectModel.FK__orders__cid__43D61337">
+      <End Role="customer" EntitySet="customers" />
+      <End Role="order" EntitySet="carts" />
+    </AssociationSet>
+    <AssociationSet Name="FK__orders__p_id__44CA3770" Association="projectModel.FK__orders__p_id__44CA3770">
+      <End Role="product" EntitySet="products" />
+      <End Role="order" EntitySet="carts" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="customer">
+    <Key>
+      <PropertyRef Name="cid" />
+    </Key>
+    <Property Name="cid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="username" Type="String" MaxLength="30" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="phno" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="address" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="orders" Relationship="projectModel.FK__orders__cid__43D61337" FromRole="customer" ToRole="order" />
+  </EntityType>
+  <EntityType Name="cart">
+    <Key>
+      <PropertyRef Name="oid" />
+    </Key>
+    <Property Name="oid" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="cid" Type="Int32" />
+    <Property Name="p_id" Type="Int32" />
+    <Property Name="oname" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="oimage" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="oprice" Type="Int32" />
+    <Property Name="total" Type="Int32" />
+    <NavigationProperty Name="customer" Relationship="projectModel.FK__orders__cid__43D61337" FromRole="order" ToRole="customer" />
+    <NavigationProperty Name="product" Relationship="projectModel.FK__orders__p_id__44CA3770" FromRole="order" ToRole="product" />
+  </EntityType>
+  <Association Name="FK__orders__cid__43D61337">
+    <End Type="projectModel.customer" Role="customer" Multiplicity="0..1" />
+    <End Type="projectModel.cart" Role="order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="customer">
+        <PropertyRef Name="cid" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="cid" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__orders__p_id__44CA3770">
+    <End Type="projectModel.product" Role="product" Multiplicity="0..1" />
+    <End Type="projectModel.cart" Role="order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="product">
+        <PropertyRef Name="p_id" />
+      </Principal>
+      <Dependent Role="order">
+        <PropertyRef Name="p_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

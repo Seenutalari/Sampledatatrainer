@@ -1,0 +1,60 @@
+﻿@model sampleadmin.Models.cart
+    @using sampleadmin.Models
+@{
+    ViewBag.Title = "Display";
+}
+
+
+
+<body style=" font-family:'Book Antiqua'">
+    <center>
+        <table>
+     
+                <tr style=" height : 100px">
+                    <td>
+                        <img src="@Url.Content(Model.oimage)" width=" 300" height=" 300" class=" img.rounded" />
+
+                    </td>
+
+                    <td style="text-align: center; vertical-align: middle;">
+                        <table>
+                            <tr>
+                                <th style="background-color: white;">
+                                    @Html.DisplayFor(model =>model.oname)
+
+                                </th>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    Rs.
+                                    @Html.DisplayFor(model => model.oprice)
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                    </td>
+
+                    <td style="text-align: center; vertical-align: middle;">
+
+                        @Html.ActionLink("Back to Home", "Index","Home")
+
+
+
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        @Html.ActionLink("AddToCart", "AddToCart", new { id = Model.p_id })
+                    </td>
+                </tr>
+            
+
+        </table>
+
+
+
+        <br />
+    </center>
+</body>
+

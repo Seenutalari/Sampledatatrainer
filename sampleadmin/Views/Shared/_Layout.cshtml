@@ -1,0 +1,72 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - FashionCorner</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+</head>
+<body>
+    @*<nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark  pt-3 pb-3" >*@
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-warning pt-3 pb-3" opacity="0.2">
+        <div class="container">
+            @Html.ActionLink("FashionCorner", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Toggle navigation" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+                <ul class="navbar-nav flex-grow-1" style="font-size:medium; color:white">
+                    <li>@Html.ActionLink("Home", "Index", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("About", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    @*<li>@Html.TextBox("Search", "Search", "Home", new { area = "" }, new { @class = "nav-link" })</li>*@
+                    @*@if (User.Identity.IsAuthenticated)
+        {*@
+
+                    <li>@Html.ActionLink("Men", "Men", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Women", "Women", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("Kids", "Kids", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+
+
+                    <li>@Html.ActionLink("Login", "Login", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li>@Html.ActionLink("AdLogin", "AdLogin", "Home", new { area = "" }, new { @class = "nav-link" })</li>
+                    <li></li>
+
+                </ul>
+            </div> 
+                <div style="vertical-align: bottom">
+
+
+                    @using (Html.BeginForm("Search", "Home", FormMethod.Get))
+                    {
+                        <p style="float:right; vertical-align:baseline">
+                            @Html.TextBox("Search_Data", ViewBag.FilterValue as string)
+                            <input type="submit" value="Search" style="background-color:transparent; border:hidden; color:white; font-size:medium" />
+                        </p>
+                    }
+                    
+
+                </div>
+            
+            </div>
+    </nav>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <center>
+            <footer >
+                <p>
+                    &copy; @DateTime.Now.Year - FashionCorner. All rights reserved<br />
+                    Terms of use
+                </p>
+            </footer>
+        </center>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

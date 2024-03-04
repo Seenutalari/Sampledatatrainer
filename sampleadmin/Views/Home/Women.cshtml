@@ -1,0 +1,66 @@
+﻿
+@model PagedList.IPagedList<sampleadmin.Models.product>
+@using sampleadmin.Models
+@using PagedList.Mvc;
+<link href="~/Content/PagedList.css" rel="stylesheet" />
+@{
+    ViewBag.Title = "Women";
+}
+
+
+
+<body style=" font-family:'Book Antiqua'">
+    <center>
+        <table class="table" style="font-size:large">
+
+            <tr>
+                @foreach (product item in Model)
+                {
+                <tr style=" height : 100px">
+                    <td>
+                        <img src="@Url.Content(item.p_image)" width=" 300" height=" 300" class=" img.rounded" />
+
+                    </td>
+
+                    <td style="text-align: center; vertical-align: middle;">
+                        <table>
+                            <tr>
+                                <th style="background-color: white;">
+                                    @Html.DisplayFor(modelItem => item.pname)
+
+                                </th>
+
+                            </tr>
+                            <tr>
+                                <td>
+                                    ₹ 
+                                    @Html.DisplayFor(modelItem => item.price)
+                                </td>
+
+                            </tr>
+
+                        </table>
+
+                    </td>
+
+                    <td style="text-align: center; vertical-align: middle;">
+
+                        @Html.ActionLink("View", "Details", new { id = item.p_id })
+
+
+
+                    </td>
+                    <td style="text-align: center; vertical-align: middle;">
+                        @Html.ActionLink("Add to cart", "Cart", "Shopcart", new { area = "", id = item.p_id }, null)
+
+                    </td>
+                </tr>
+
+            }
+
+            </table>
+        </center>
+    </body>
+    Page @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) of @Model.PageCount
+    @Html.PagedListPager(Model, Page_No => Url.Action("Women",
+        new { Page_No, Sorting_Order = ViewBag.CurrentSortOrder, Filter_Value = ViewBag.FilterValue }))

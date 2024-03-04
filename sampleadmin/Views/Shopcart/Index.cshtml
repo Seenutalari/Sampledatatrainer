@@ -1,0 +1,19 @@
+﻿@model sampleadmin.Models.cart
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+@foreach (var item in ViewBag.CartItems)
+{
+    <div>
+        <img src="@item.oimage" alt="@item.oname" />
+        <span>@item.oname</span>
+        <span>@item.oprice</span>
+    </div>
+}
+<div>
+    <strong>Total Price: @ViewBag.TotalPrice</strong>
+</div>
+<button type="button" onclick="location.href='@Url.Action("Details", "Shopcart")'">Buy</button>
